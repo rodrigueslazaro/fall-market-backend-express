@@ -1,18 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const { Pool } = require('pg');
-
 const app = express();
 
-//const corsOptions = {
-//  origin: 'http://localhost:4200',
-//  methods: 'POST, GET', // You can specify other HTTP methods as needed.
-//};
-
-app.use(cors({
-  "origin": "*",
-  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-}));
+app.use(cors());
 
 const pool = new Pool({
   user: 'fm_admin',
@@ -20,6 +11,10 @@ const pool = new Pool({
   database: 'fm_products',
   password: 'mgdhcz8dt',
   port: 5432,
+});
+
+app.get('/', (req, res) => {
+  res.send('Hello, World!');
 });
 
 app.get('/api/items', (req, res) => {
@@ -76,13 +71,6 @@ app.post('/api/items', (req, res) => {
     });
   });
 });
-
-//app.use((req, res, next) => {
-//  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-//  res.header('Access-Control-Allow-Methods', 'POST, GET'); // You can specify other methods.
-//  res.header('Access-Control-Allow-Headers', 'Content-Type');
-//  next();
-//});
 
 const port = 3000; // You can change the port as needed
 app.listen(port, () => {
